@@ -9,13 +9,13 @@
 
 WebServer server(80);
 
-static auto hiRes = esp32cam::Resolution::find(1200, 900);
+static auto hiRes = esp32cam::Resolution::find(1600, 1200);
 
 void handlePicture() {
   Serial.println("GET");
 
   digitalWrite(LED_PIN, HIGH);
-  delay(100);
+  //delay(10);
 
   if (!esp32cam::Camera.changeResolution(hiRes)) {
     Serial.println("SET-HI-RES FAIL");

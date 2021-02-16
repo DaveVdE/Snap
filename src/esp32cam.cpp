@@ -10,7 +10,19 @@ CameraClass Camera;
 bool
 CameraClass::begin(const Config& config)
 {
-  return esp_camera_init(reinterpret_cast<const camera_config_t*>(config.m_cfg)) == ESP_OK;
+  if (esp_camera_init(reinterpret_cast<const camera_config_t*>(config.m_cfg)) == ESP_OK) {
+    sensor_t* sensor = esp_camera_sensor_get();
+
+    // Do some post config
+    //sensor->set_colorbar(sensor, true);
+    sensor->set_exposure_ctrl(sensor, false);
+    sensor->set_aec_value(sensor, 1000);
+    sensor->set_gain_ctrl(sensor, false);
+    sensor->set_agc_gain(sensor, 0);
+    return true;
+  }
+
+  return false;
 }
 
 bool
